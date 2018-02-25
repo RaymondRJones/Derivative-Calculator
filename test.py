@@ -36,7 +36,7 @@ class Terms:
                 self.setCoeff(coefficient)
                 self.setVari(new_vari)
                 return int(coefficient)
-
+    #Cehcks x is after coeff, therefore, power rule should be used
     def is_power_rule(self, term):
         for n in term:
             if(n.isalpha() and n == 'x'):
@@ -49,16 +49,18 @@ class Terms:
         for i in range(n+1,len(term)):
             #Records all numerical values to right of a carrot ^^
             exponent += term[i]
+            term = term[:i] + term[i+1:]
         #Loops through exponent to make sure values are all numerical
-        for x in exponent:
-            print(int(exponent) * 2)
-            #return int(exponent)*self.getCoeff()
         self.setCoeff(int(exponent) * int(self.getCoeff()))
         self.setExponent(int(exponent)-1)
-        return str(self.getCoeff()) + " " + self.getVari() + str(self.getExponent())
+        self.setVari(term)
+        return str(self.getCoeff()) + " " + self.getVari() + " " + str(self.getExponent())
+
 
 fx = input("Please enter Polynomial")
 new_term = Terms("1", "x")
+print("storing")
 new_term.storeCoeff(fx)
+print(new_term.getVari())
 if (new_term.is_power_rule(fx)):
-    print(new_term.power_rule(fx))
+    print(new_term.power_rule(new_term.getVari()))
